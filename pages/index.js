@@ -3,7 +3,7 @@ import Tabla from "../components/Tabla";
 export default function Home() {
   return (
     <div style={{ padding: 20 }}>
-      <h1>Tabla de posiciones</h1>
+      <h1>Liga Alevin 2015</h1>
       <Tabla />
     </div>
   );

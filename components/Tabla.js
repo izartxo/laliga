@@ -136,7 +136,7 @@ export default function Tabla() {
 
   return (
     <div>
-      <h2>Clasificación</h2>
+      <h2>Sailkapena</h2>
 
     <ul>
     {clasificacion.map((e, i) => (
@@ -159,7 +159,7 @@ export default function Tabla() {
     ))}
     </ul>
 
-      <h3>Jornada 19</h3>
+      <h3>19. Jardunaldia</h3>
 
       {partidosJ19.map(partido => {
         const resultadoActual = selecciones[partido.id]?.resultado;
@@ -188,7 +188,7 @@ export default function Tabla() {
         );
       })}
 
-      <h3>Jornada 20</h3>
+      <h3>20. Jardunaldia</h3>
 
       {partidosJ20.map(partido => {
         const resultadoActual = selecciones[partido.id]?.resultado;
@@ -217,7 +217,7 @@ export default function Tabla() {
         );
       })}
 
-      <h3>Jornada 21</h3>
+      <h3>21. Jardunaldia</h3>
 
       {partidosJ21.map(partido => {
         const resultadoActual = selecciones[partido.id]?.resultado;
@@ -246,7 +246,7 @@ export default function Tabla() {
         );
       })}
 
-      <h3>Jornada 22</h3>
+      <h3>22. Jardunaldia</h3>
 
       {partidosJ22.map(partido => {
         const resultadoActual = selecciones[partido.id]?.resultado;
