@@ -217,7 +217,7 @@ export default function Tabla() {
         );
       })}
 
-      <h3>22.jardunaldia</h3>
+      <h3>22. Jardunaldia</h3>
 
       {partidosJ22.map(partido => {
         const resultadoActual = selecciones[partido.id]?.resultado;
