@@ -24,12 +24,12 @@ const equipos = [
 ];
 
 
-const partidosJ19 = [
-  { id: "p1", local: "alluitz", visitante: "lekeitio" },
-  { id: "p2", local: "arratia", visitante: "ondarroa" },
-  { id: "p3", local: "abadino", visitante: "gdk" },
-  { id: "p4", local: "gernika", visitante: "ermua" }
-];
+// const partidosJ19 = [
+//   { id: "p1", local: "alluitz", visitante: "lekeitio" },
+//   { id: "p2", local: "arratia", visitante: "ondarroa" },
+//   { id: "p3", local: "abadino", visitante: "gdk" },
+//   { id: "p4", local: "gernika", visitante: "ermua" }
+// ];
 
 const partidosJ20 = [
   { id: "p5", local: "amore", visitante: "alluitz" },
@@ -62,15 +62,15 @@ const calcularClasificacion = (equipos, partidos) => {
 
   equipos.forEach(e => {
     if (e.id == "gdk"){
-      tabla[e.id] = { ...e, puntos: 37 };  
+      tabla[e.id] = { ...e, puntos: 40 };  
     } else if (e.id == "gernika"){
-      tabla[e.id] = { ...e, puntos: 42 };
+      tabla[e.id] = { ...e, puntos: 45 };
     } else if (e.id == "ermua"){
       tabla[e.id] = { ...e, puntos: 38 };
     } else if (e.id == "arratia"){
-      tabla[e.id] = { ...e, puntos: 34 };  
+      tabla[e.id] = { ...e, puntos: 37 };  
     } else if (e.id == "alluitz"){
-      tabla[e.id] = { ...e, puntos: 31 };  
+      tabla[e.id] = { ...e, puntos: 34 };  
     } 
     else{
       tabla[e.id] = { ...e, puntos: 0 };
@@ -159,35 +159,6 @@ export default function Tabla() {
     ))}
     </ul>
 
-      <h3>19. Jardunaldia</h3>
-
-      {partidosJ19.map(partido => {
-        const resultadoActual = selecciones[partido.id]?.resultado;
-
-        return (
-          <div key={partido.id} style={{ marginBottom: 20 }}>
-            <strong>
-              {partido.local} vs {partido.visitante}
-            </strong>
-
-            <div>
-              {["1", "X", "2"].map(op => (
-                <label key={op} style={{ marginRight: 10 }}>
-                  <input
-                    type="radio"
-                    name={`partido-${partido.id}`}
-                    value={op}
-                    checked={resultadoActual === op}
-                    onChange={() => handleSeleccion(partido, op)}
-                  />
-                  {op}
-                </label>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-
       <h3>20. Jardunaldia</h3>
 
       {partidosJ20.map(partido => {
@@ -246,7 +217,7 @@ export default function Tabla() {
         );
       })}
 
-      <h3>22. Jardunaldia</h3>
+      <h3>Jornada 22.jardunaldia</h3>
 
       {partidosJ22.map(partido => {
         const resultadoActual = selecciones[partido.id]?.resultado;
