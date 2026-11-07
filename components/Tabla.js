@@ -10,52 +10,68 @@ import {
 const pgdk = 34;
 
 const equipos = [
-  { id: "gdk", nombre: "Galdakao", logo: "/logos/gdk.png" },
-  { id: "gernika", nombre: "Gernika", logo: "/logos/gernika.png" },
-  { id: "arratia", nombre: "Arratia", logo: "/logos/arratia.png" },
-  { id: "alluitz", nombre: "Alluitz", logo: "/logos/alluitz.png" },
-  { id: "anboto", nombre: "Anboto", logo: "/logos/anboto.png" },
-  { id: "bermeo", nombre: "Bermeo", logo: "/logos/bermeo.png" },
-  { id: "lekeitio", nombre: "Lekeitio", logo: "/logos/lekeitio.png" },
-  { id: "amore", nombre: "Amorebieta", logo: "/logos/amore.png" },
-  { id: "abadino", nombre: "Abadino", logo: "/logos/abadino.png" },
-  { id: "ondarroa", nombre: "Ondarroa", logo: "/logos/ondarroa.png" },
-  { id: "ermua", nombre: "Ermua", logo: "/logos/ermua.png" }
+  { id: "gdk", nombre: "Galdakao 2015 zuria", logo: "/logos/gdk.png" },
+  { id: "gernika", nombre: "Gernika 2015 R", logo: "/logos/gernika.png" },
+  { id: "arratia", nombre: "Arratia 15R", logo: "/logos/arratia.png" },
+  { id: "mugarra", nombre: "Cultural Mugarra 15", logo: "/logos/alluitz.png" },
+  { id: "oiz", nombre: "Cultural Oiz 2015", logo: "/logos/anboto.png" },
+  { id: "danok", nombre: "Danok bat 2015 B", logo: "/logos/danok.png" },
+  { id: "santutxu", nombre: "Santutxu 15 Urdina", logo: "/logos/santutxu.png" },
+  { id: "amore", nombre: "Amorebieta 15R", logo: "/logos/amore.png" },
+  { id: "indautxu", nombre: "Indautxu 2015R", logo: "/logos/indautxu.png" },
+  { id: "athletic", nombre: "Athletic B - 2016", logo: "/logos/athletic.png" },
+  { id: "ermua", nombre: "Ermua Blues", logo: "/logos/ermua.png" },
+  { id: "baskauri", nombre: "Baskauri FE 2015 A", logo: "/logos/baskauri.png" }
 ];
 
+ const partidosJ1 = [
+   { id: "p1", local: "gernika", visitante: "gdk" }
+ ];
 
-// const partidosJ19 = [
-//   { id: "p1", local: "alluitz", visitante: "lekeitio" },
-//   { id: "p2", local: "arratia", visitante: "ondarroa" },
-//   { id: "p3", local: "abadino", visitante: "gdk" },
-//   { id: "p4", local: "gernika", visitante: "ermua" }
-// ];
+ const partidosJ2 = [
+   { id: "p1", local: "gdk", visitante: "santutxu" }
+ ];
 
-const partidosJ20 = [
-  { id: "p5", local: "amore", visitante: "alluitz" },
-  { id: "p6", local: "gdk", visitante: "arratia" },
-  { id: "p7", local: "ermua", visitante: "abadino" }
-  
-];
+ const partidosJ3 = [
+   { id: "p1", local: "athletic", visitante: "gdk" }
+ ];
+ 
+ const partidosJ4 = [
+   { id: "p1", local: "gdk", visitante: "arratia" }
+ ];
 
-const partidosJ21 = [
-  { id: "p8", local: "alluitz", visitante: "ondarroa" },
-  { id: "p9", local: "bermeo", visitante: "gdk" },
-  { id: "p10", local: "arratia", visitante: "ermua" },
-  { id: "p11", local: "abadino", visitante: "gernika" }
-];
+const partidosJ5 = [
+   { id: "p1", local: "gdk", visitante: "oiz" }
+ ];
 
-const partidosJ22 = [
-  // { id: "p12", local: "gdk", visitante: "alluitz" },
-  { id: "p13", local: "ermua", visitante: "bermeo" },
-  { id: "p14", local: "gernika", visitante: "arratia" }
-  
-];
+const partidosJ6 = [
+   { id: "p1", local: "ermua", visitante: "gdk" }
+ ];
 
-const partidosApl = [
-  { id: "p15", local: "ermua", visitante: "gdk" }
-  
-];
+ const partidosJ7 = [
+   { id: "p1", local: "gdk", visitante: "indautxu" }
+ ];
+
+ const partidosJ8 = [
+   { id: "p1", local: "danok", visitante: "gdk" }
+ ];
+
+ const partidosJ9 = [
+   { id: "p1", local: "alluitz", visitante: "lekeitio" }
+ ];
+ 
+ const partidosJ10 = [
+   { id: "p1", local: "gdk", visitante: "baskauri" }
+ ];
+
+const partidosJ11 = [
+   { id: "p1", local: "mugarra", visitante: "gdk" }
+ ];
+
+const partidosJ12 = [
+   { id: "p1", local: "gdk", visitante: "amore" }
+ ];
+
 
 const calcularClasificacion = (equipos, partidos) => {
   const tabla = {};
