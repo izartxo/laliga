@@ -73,6 +73,28 @@ const partidosJ12 = [
  ];
 
 
+const jornadas = [
+  partidosJ1,
+  partidosJ2,
+  partidosJ3,
+  partidosJ4,
+  partidosJ5,
+  partidosJ6,
+  partidosJ7,
+  partidosJ8,
+  partidosJ9,
+  partidosJ10,
+  partidosJ11,
+  partidosJ12
+].map((partidos, indice) => ({
+  numero: indice + 1,
+  partidos: partidos.map((partido, i) => ({
+    ...partido,
+    id: `j${indice + 1}-p${i + 1}`
+  }))
+}));
+
+
 const calcularClasificacion = (equipos, partidos) => {
   const tabla = {};
 
@@ -175,121 +197,48 @@ export default function Tabla() {
     ))}
     </ul>
 
-      <h3>20. Jardunaldia</h3>
+    
+{jornadas.map(jornada => (
+  <div key={jornada.numero}>
+    <h3>{jornada.numero}. Jardunaldia</h3>
 
-      {partidosJ20.map(partido => {
-        const resultadoActual = selecciones[partido.id]?.resultado;
+    {jornada.partidos.map(partido => {
+      const resultadoActual = selecciones[partido.id]?.resultado;
 
-        return (
-          <div key={partido.id} style={{ marginBottom: 20 }}>
-            <strong>
-              {partido.local} vs {partido.visitante}
-            </strong>
+      const nombreLocal =
+        equipos.find(e => e.id === partido.local)?.nombre
+        ?? partido.local;
 
-            <div>
-              {["1", "X", "2"].map(op => (
-                <label key={op} style={{ marginRight: 10 }}>
-                  <input
-                    type="radio"
-                    name={`partido-${partido.id}`}
-                    value={op}
-                    checked={resultadoActual === op}
-                    onChange={() => handleSeleccion(partido, op)}
-                  />
-                  {op}
-                </label>
-              ))}
-            </div>
+      const nombreVisitante =
+        equipos.find(e => e.id === partido.visitante)?.nombre
+        ?? partido.visitante;
+
+      return (
+        <div key={partido.id} style={{ marginBottom: 20 }}>
+          <strong>
+            {nombreLocal} vs {nombreVisitante}
+          </strong>
+
+          <div>
+            {["1", "X", "2"].map(op => (
+              <label key={op} style={{ marginRight: 10 }}>
+                <input
+                  type="radio"
+                  name={`partido-${partido.id}`}
+                  value={op}
+                  checked={resultadoActual === op}
+                  onChange={() => handleSeleccion(partido, op)}
+                />
+                {op}
+              </label>
+            ))}
           </div>
-        );
-      })}
+        </div>
+      );
+    })}
+  </div>
+))}
 
-      <h3>21. Jardunaldia</h3>
-
-      {partidosJ21.map(partido => {
-        const resultadoActual = selecciones[partido.id]?.resultado;
-
-        return (
-          <div key={partido.id} style={{ marginBottom: 20 }}>
-            <strong>
-              {partido.local} vs {partido.visitante}
-            </strong>
-
-            <div>
-              {["1", "X", "2"].map(op => (
-                <label key={op} style={{ marginRight: 10 }}>
-                  <input
-                    type="radio"
-                    name={`partido-${partido.id}`}
-                    value={op}
-                    checked={resultadoActual === op}
-                    onChange={() => handleSeleccion(partido, op)}
-                  />
-                  {op}
-                </label>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-
-      <h3>22. Jardunaldia</h3>
-
-      {partidosJ22.map(partido => {
-        const resultadoActual = selecciones[partido.id]?.resultado;
-
-        return (
-          <div key={partido.id} style={{ marginBottom: 20 }}>
-            <strong>
-              {partido.local} vs {partido.visitante}
-            </strong>
-
-            <div>
-              {["1", "X", "2"].map(op => (
-                <label key={op} style={{ marginRight: 10 }}>
-                  <input
-                    type="radio"
-                    name={`partido-${partido.id}`}
-                    value={op}
-                    checked={resultadoActual === op}
-                    onChange={() => handleSeleccion(partido, op)}
-                  />
-                  {op}
-                </label>
-              ))}
-            </div>
-          </div>
-        );
-      })}
-
-      <h3>Jornada Aplazada</h3>
-
-      {partidosApl.map(partido => {
-        const resultadoActual = selecciones[partido.id]?.resultado;
-
-        return (
-          <div key={partido.id} style={{ marginBottom: 20 }}>
-            <strong>
-              {partido.local} vs {partido.visitante}
-            </strong>
-
-            <div>
-              {["1", "X", "2"].map(op => (
-                <label key={op} style={{ marginRight: 10 }}>
-                  <input
-                    type="radio"
-                    name={`partido-${partido.id}`}
-                    value={op}
-                    checked={resultadoActual === op}
-                    onChange={() => handleSeleccion(partido, op)}
-                  />
-                  {op}
-                </label>
-              ))}
-            </div>
-          </div>
-        );
-      })}
 
     </div>
   );
