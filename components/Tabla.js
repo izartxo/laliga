@@ -99,20 +99,9 @@ const calcularClasificacion = (equipos, partidos) => {
   const tabla = {};
 
   equipos.forEach(e => {
-    if (e.id == "gdk"){
-      tabla[e.id] = { ...e, puntos: 40 };  
-    } else if (e.id == "gernika"){
-      tabla[e.id] = { ...e, puntos: 45 };
-    } else if (e.id == "ermua"){
-      tabla[e.id] = { ...e, puntos: 38 };
-    } else if (e.id == "arratia"){
-      tabla[e.id] = { ...e, puntos: 37 };  
-    } else if (e.id == "alluitz"){
-      tabla[e.id] = { ...e, puntos: 34 };  
-    } 
-    else{
+    
       tabla[e.id] = { ...e, puntos: 0 };
-    }
+    
   });
 
   partidos.forEach(p => {
