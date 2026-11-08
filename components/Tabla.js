@@ -1,3 +1,4 @@
+
 import { useEffect, useState } from "react";
 import { db } from "../lib/firebase";
 import {
@@ -6,8 +7,6 @@ import {
   doc,
   setDoc
 } from "firebase/firestore";
-
-const pgdk = 34;
 
 const equipos = [
   { id: "gdk", nombre: "Galdakao 2015 zuria", logo: "/logos/gdk.png" },
@@ -24,55 +23,56 @@ const equipos = [
   { id: "baskauri", nombre: "Baskauri FE 2015 A", logo: "/logos/baskauri.png" }
 ];
 
- const partidosJ1 = [
-   { id: "p1", local: "gernika", visitante: "gdk" }
- ];
+// Partidos de las 12 jornadas
+const partidosJ1 = [
+  { id: "p1", local: "gernika", visitante: "gdk" }
+];
 
- const partidosJ2 = [
-   { id: "p1", local: "gdk", visitante: "santutxu" }
- ];
+const partidosJ2 = [
+  { id: "p1", local: "gdk", visitante: "santutxu" }
+];
 
- const partidosJ3 = [
-   { id: "p1", local: "athletic", visitante: "gdk" }
- ];
- 
- const partidosJ4 = [
-   { id: "p1", local: "gdk", visitante: "arratia" }
- ];
+const partidosJ3 = [
+  { id: "p1", local: "athletic", visitante: "gdk" }
+];
+
+const partidosJ4 = [
+  { id: "p1", local: "gdk", visitante: "arratia" }
+];
 
 const partidosJ5 = [
-   { id: "p1", local: "gdk", visitante: "oiz" }
- ];
+  { id: "p1", local: "gdk", visitante: "oiz" }
+];
 
 const partidosJ6 = [
-   { id: "p1", local: "ermua", visitante: "gdk" }
- ];
+  { id: "p1", local: "ermua", visitante: "gdk" }
+];
 
- const partidosJ7 = [
-   { id: "p1", local: "gdk", visitante: "indautxu" }
- ];
+const partidosJ7 = [
+  { id: "p1", local: "gdk", visitante: "indautxu" }
+];
 
- const partidosJ8 = [
-   { id: "p1", local: "danok", visitante: "gdk" }
- ];
+const partidosJ8 = [
+  { id: "p1", local: "danok", visitante: "gdk" }
+];
 
- const partidosJ9 = [
-   { id: "p1", local: "alluitz", visitante: "lekeitio" }
- ];
- 
- const partidosJ10 = [
-   { id: "p1", local: "gdk", visitante: "baskauri" }
- ];
+const partidosJ9 = [
+  { id: "p1", local: "alluitz", visitante: "lekeitio" }
+];
+
+const partidosJ10 = [
+  { id: "p1", local: "gdk", visitante: "baskauri" }
+];
 
 const partidosJ11 = [
-   { id: "p1", local: "mugarra", visitante: "gdk" }
- ];
+  { id: "p1", local: "mugarra", visitante: "gdk" }
+];
 
 const partidosJ12 = [
-   { id: "p1", local: "gdk", visitante: "amore" }
- ];
+  { id: "p1", local: "gdk", visitante: "amore" }
+];
 
-
+// Generar jornadas con identificadores únicos
 const jornadas = [
   partidosJ1,
   partidosJ2,
@@ -94,57 +94,68 @@ const jornadas = [
   }))
 }));
 
+// Resultados reales de las tres primeras jornadas
+const resultadosFijos = {
+  "j1-p1": "2", // Gernika - Galdakao: gana Galdakao
+  "j2-p1": "2", // Galdakao - Santutxu: gana Santutxu
+  "j3-p1": "1"  // Athletic - Galdakao: gana Athletic
+};
 
-const calcularClasificacion = (equipos, partidos) => {
-  const tabla = {};
+// Calcular puntos del Galdakao
+const calcularPuntosGaldakao = selecciones => {
+  let puntos = 3; // Victoria de la primera jornada
 
-  equipos.forEach(e => {
-    
-      tabla[e.id] = { ...e, puntos: 0 };
-    
-  });
+  jornadas
+    .filter(jornada => jornada.numero > 3)
+    .forEach(jornada => {
+      jornada.partidos.forEach(partido => {
+        const resultado = selecciones[partido.id]?.resultado;
 
-  partidos.forEach(p => {
-    if (!p.resultado) return;
+        if (!resultado) return;
 
-    if (p.resultado === "1") {
-      tabla[p.local].puntos += 3;
-    } else if (p.resultado === "2") {
-      tabla[p.visitante].puntos += 3;
-    } else if (p.resultado === "X") {
-      tabla[p.local].puntos += 1;
-      tabla[p.visitante].puntos += 1;
-    }
-  });
+        if (resultado === "X") {
+          if (
+            partido.local === "gdk" ||
+            partido.visitante === "gdk"
+          ) {
+            puntos += 1;
+          }
+        } else if (
+          (resultado === "1" && partido.local === "gdk") ||
+          (resultado === "2" && partido.visitante === "gdk")
+        ) {
+          puntos += 3;
+        }
+      });
+    });
 
-  return Object.values(tabla).sort((a, b) => b.puntos - a.puntos);
+  return puntos;
 };
 
 export default function Tabla() {
-  const [partidos, setPartidos] = useState({});
   const [selecciones, setSelecciones] = useState({});
 
   useEffect(() => {
     const unsub = onSnapshot(collection(db, "partidos"), snap => {
       const data = {};
+
       snap.docs.forEach(d => {
         data[d.id] = d.data();
       });
 
-      setPartidos(data);
-      setSelecciones(data); // para marcar radios ya guardados
+      setSelecciones(data);
     });
 
     return () => unsub();
   }, []);
 
-  const clasificacion = calcularClasificacion(
-    equipos,
-    Object.values(partidos)
-  );
+  const puntosGaldakao = calcularPuntosGaldakao(selecciones);
 
   const handleSeleccion = async (partido, valor) => {
-    // actualizar estado local
+    // No permitir modificar resultados fijos
+    if (resultadosFijos[partido.id]) return;
+
+    // Actualizar inmediatamente en pantalla
     setSelecciones(prev => ({
       ...prev,
       [partido.id]: {
@@ -153,83 +164,132 @@ export default function Tabla() {
       }
     }));
 
-    // 🔥 clave: actualizar SIEMPRE el mismo partido
-    await setDoc(doc(db, "partidos", partido.id), {
-      local: partido.local,
-      visitante: partido.visitante,
-      resultado: valor
-    });
+    // Guardar el resultado en Firebase
+    try {
+      await setDoc(doc(db, "partidos", partido.id), {
+        local: partido.local,
+        visitante: partido.visitante,
+        resultado: valor
+      });
+    } catch (error) {
+      console.error("Error al guardar el resultado:", error);
+    }
   };
 
   return (
     <div>
-      <h2>Sailkapena</h2>
+      <h2>Galdakao - Aurreikusitako puntuak</h2>
 
-    <ul>
-    {clasificacion.map((e, i) => (
-      <li key={e.id} style={{ marginBottom: 10 }}>
-        {i + 1}
-
-        <img
-        src={e.logo}
-        alt={e.nombre}
+      {/* Puntuación del Galdakao */}
+      <div
         style={{
-          width: 25,
-          height: 25,
-          margin: "0 10px",
-          verticalAlign: "middle"
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          padding: "15px",
+          backgroundColor: "#f0f4f8",
+          borderRadius: "8px",
+          marginBottom: "25px",
+          color: "#222"
         }}
-        />
-
-        {e.nombre} - {e.puntos} pts
-      </li>
-    ))}
-    </ul>
-
-    
-{jornadas.map(jornada => (
-  <div key={jornada.numero}>
-    <h3>{jornada.numero}. Jardunaldia</h3>
-
-    {jornada.partidos.map(partido => {
-      const resultadoActual = selecciones[partido.id]?.resultado;
-
-      const nombreLocal =
-        equipos.find(e => e.id === partido.local)?.nombre
-        ?? partido.local;
-
-      const nombreVisitante =
-        equipos.find(e => e.id === partido.visitante)?.nombre
-        ?? partido.visitante;
-
-      return (
-        <div key={partido.id} style={{ marginBottom: 20 }}>
-          <strong>
-            {nombreLocal} vs {nombreVisitante}
-          </strong>
-
-          <div>
-            {["1", "X", "2"].map(op => (
-              <label key={op} style={{ marginRight: 10 }}>
-                <input
-                  type="radio"
-                  name={`partido-${partido.id}`}
-                  value={op}
-                  checked={resultadoActual === op}
-                  onChange={() => handleSeleccion(partido, op)}
-                />
-                {op}
-              </label>
-            ))}
-          </div>
+      >
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <img
+            src="/logos/gdk.png"
+            alt="Galdakao"
+            style={{
+              width: 40,
+              height: 40,
+              marginRight: 12
+            }}
+          />
+          <strong>Galdakao 2015 zuria</strong>
         </div>
-      );
-    })}
-  </div>
-))}
 
+        <strong style={{ fontSize: 24 }}>
+          {puntosGaldakao} pts
+        </strong>
+      </div>
 
+      {/* Jornadas */}
+      {jornadas.map(jornada => (
+        <div key={jornada.numero}>
+          <h3>{jornada.numero}. Jardunaldia</h3>
+
+          {jornada.partidos.map(partido => {
+            const bloqueado = Boolean(
+              resultadosFijos[partido.id]
+            );
+
+            const resultadoActual = bloqueado
+              ? resultadosFijos[partido.id]
+              : selecciones[partido.id]?.resultado;
+
+            const nombreLocal =
+              equipos.find(e => e.id === partido.local)?.nombre
+              ?? partido.local;
+
+            const nombreVisitante =
+              equipos.find(e => e.id === partido.visitante)?.nombre
+              ?? partido.visitante;
+
+            return (
+              <div
+                key={partido.id}
+                style={{
+                  marginBottom: 20,
+                  padding: 12,
+                  backgroundColor: bloqueado
+                    ? "#f0f0f0"
+                    : "transparent",
+                  borderRadius: 6,
+                  color: bloqueado ? "#333" : "inherit"
+                }}
+              >
+                <strong>
+                  {nombreLocal} vs {nombreVisitante}
+                </strong>
+
+                {bloqueado && (
+                  <span
+                    style={{
+                      marginLeft: 10,
+                      fontSize: 12,
+                      color: "#666"
+                    }}
+                  >
+                    🔒 Emaitza finkoa
+                  </span>
+                )}
+
+                <div style={{ marginTop: 8 }}>
+                  {["1", "X", "2"].map(op => (
+                    <label
+                      key={op}
+                      style={{
+                        marginRight: 15,
+                        opacity: bloqueado ? 0.7 : 1
+                      }}
+                    >
+                      <input
+                        type="radio"
+                        name={`partido-${partido.id}`}
+                        value={op}
+                        checked={resultadoActual === op}
+                        disabled={bloqueado}
+                        onChange={() =>
+                          handleSeleccion(partido, op)
+                        }
+                      />
+                      {op}
+                    </label>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ))}
     </div>
   );
 }
-
