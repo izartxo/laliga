@@ -1,0 +1,89 @@
+body {
+  margin: 0;
+  font-family: 'Oswald', sans-serif;
+
+  background-image: url("/fondo-futbol.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  color: white;
+}
+
+/* contenedor principal */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  background: #111827;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* títulos */
+h1, h2, h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* tabla */
+.tabla {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tabla th,
+.tabla td {
+  padding: 10px;
+  text-align: left;
+}
+
+.tabla tr {
+  border-bottom: 1px solid #1f2937;
+}
+
+.tabla tr:hover {
+  background: #1f2937;
+}
+
+/* posición */
+.pos {
+  font-weight: bold;
+  color: #22c55e;
+}
+
+/* equipo */
+.equipo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+}
+
+/* puntos */
+.puntos {
+  text-align: right;
+  font-weight: bold;
+}
+
+/* partidos */
+.partido {
+  margin-top: 20px;
+  padding: 15px;
+  background: #020617;
+  border-radius: 10px;
+}
+
+/* radios */
+.radio-group label {
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+input[type="radio"] {
+  accent-color: #22c55e;
+}
